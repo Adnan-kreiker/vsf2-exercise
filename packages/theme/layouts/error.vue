@@ -1,25 +1,36 @@
 <template>
   <div id="error">
-    <SfImage
-      class="image"
-      src="/error/error.svg"
-      alt="leaves"
-    />
-     <SfHeading
-      :title="error.statusCode === 404 ? error.message ? error.message : 'Item not found' : 'An error occured'"
+    <SfImage class="image" src="/error/error.svg" alt="leaves" />
+    <SfHeading
+      :title="
+        error.statusCode === 404
+          ? error.message
+            ? error.message
+            : 'Item not found'
+          : 'An error occured'
+      "
       :level="1"
       class="sf-heading--no-underline sf-heading--center page-title"
     />
     <div class="small-container text-center">
-      <p>{{ error.statusCode === 404 ? 'We can\'t find the item you are looking for. Please try searching or viewing all of our items.' : 'Please go back or try again' }}</p>
-    <div class="actions">
-      <SfButton link="/" class="sf-button--full-width actions__button">
-        Return home
-      </SfButton>
-      <SfButton class="sf-button--full-width sf-button--text actions__button" @click="$router.go(-1)">
-        Back
-      </SfButton>
-    </div>
+      <p>
+        {{
+          error.statusCode === 404
+            ? "We can't find the item you are looking for. Please try searching or viewing all of our items."
+            : 'Please go back or try again'
+        }}
+      </p>
+      <div class="actions">
+        <SfButton link="/" class="sf-button--full-width actions__button">
+          Return home
+        </SfButton>
+        <SfButton
+          class="sf-button--full-width sf-button--text actions__button"
+          @click="$router.go(-1)"
+        >
+          Back
+        </SfButton>
+      </div>
     </div>
   </div>
 </template>
@@ -30,11 +41,15 @@ export default {
 
   components: { SfButton, SfImage, SfHeading },
 
-  props: ['error']
+  props: ['error'],
 };
 </script>
 <style lang="scss" scoped>
-@import "~@storefront-ui/vue/styles";
+@import '~@storefront-ui/vue/styles';
+:root {
+  --font-family--primary: 'Roboto Mono';
+  --font-family--secondary: 'Montserrat';
+}
 #error {
   box-sizing: border-box;
   display: flex;
@@ -67,6 +82,7 @@ export default {
     --heading-description-margin: 0;
   }
 }
+
 .actions {
   display: flex;
   align-items: center;

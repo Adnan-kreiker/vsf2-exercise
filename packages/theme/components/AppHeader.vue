@@ -1,12 +1,15 @@
 <template>
   <div>
     <SfHeader
+      title="Vue Storefront 2"
       data-cy="app-header"
+      search-placeholder="hah"
       :search-value="term"
       :cart-items-qty="cartTotalItems"
       :account-icon="accountIcon"
       class="sf-header--has-mobile-search"
       :class="{ 'header-on-top': isSearchOpen }"
+      :is-search-open="searchBarVisible"
       @click:cart="toggleCartSidebar"
       @click:wishlist="toggleWishlistSidebar"
       @click:account="handleAccountClick"
@@ -14,14 +17,33 @@
       @change:search="(p) => (term = p)"
     >
       <!-- TODO: add mobile view buttons after SFUI team PR -->
+      <template #changeLocale>
+        <locale-selector></locale-selector>
+      </template>
+      <template #searchIcon>
+        <SfButton class="sf-button--pure sf-header__action" @click="searchOpen">
+          <SfIcon
+            icon="search"
+            size="xs"
+            color="black-primary"
+            viewBox="0 0 24 24"
+            :coverage="1"
+            class="search-icon"
+          />
+        </SfButton>
+      </template>
       <template #logo>
         <nuxt-link :to="localePath('/')" class="sf-header__logo">
           <SfImage
-            src="/icons/logo.svg"
+            src="/icons/logo.png"
             alt="Vue Storefront Next"
             class="sf-header__logo-image"
+            width="30"
+            height="30"
+            title="Vue Storefront 2"
           />
         </nuxt-link>
+        <h1 class="sf-header__title">{{ title }}</h1>
       </template>
 
       <template v-if="categories.length > 0" #navigation>
@@ -72,28 +94,41 @@
       </template>
 
       <template #search>
-        <SfSearchBar
-          placeholder="Search for items"
-          :value="term"
-          :icon="{ size: '1.25rem', color: '#43464E' }"
-          aria-label="Search"
-          @input="handleSearch"
-          @focus="isSearchOpen = true"
-        ></SfSearchBar>
+        <div class="searchbar__wrapper">
+          <SfSearchBar
+            :value="term"
+            :icon="{ size: '1.25rem', color: '#43464E' }"
+            aria-label="Search"
+            @input="handleSearch"
+            @focus="isSearchOpen = true"
+          ></SfSearchBar>
+          <SfIcon
+            icon="cross"
+            size="xs"
+            viewBox="0 0 24 24"
+            :coverage="1"
+            @click="closeSearch"
+          />
+        </div>
       </template>
     </SfHeader>
     <SearchResults
       :visible="isSearchOpen"
       :result="searchResults"
+      @keyup.esc="closeSearch"
       @close="closeSearch"
     />
-    <SfOverlay :visible="isSearchOpen" @click="isSearchOpen = false" />
+    <SfOverlay
+      :visible="isSearchOpen"
+      @keyup.esc="isSearchOpen = false"
+      @click="isSearchOpen = false"
+    />
   </div>
 </template>
 
 <script type="module">
+import SfHeader from './SfHeader.vue';
 import {
-  SfHeader,
   SfImage,
   SfButton,
   SfBadge,
@@ -148,6 +183,8 @@ export default {
       return count ? count.toString() : null;
     });
 
+    const searchBarVisible = ref(false);
+
     const accountIcon = computed(() =>
       isAuthenticated.value ? 'profile_fill' : 'profile'
     );
@@ -159,6 +196,11 @@ export default {
       }
 
       toggleLoginModal();
+    };
+
+    const title = ref('Vue Storefront 2');
+    const iconClicked = () => {
+      searchBarVisible.value = !searchBarVisible.value;
     };
 
     // #region Search Section
@@ -177,9 +219,15 @@ export default {
       });
     }, 1000);
     const closeSearch = () => {
+      searchBarVisible.value = false;
+      console.log('closed');
       if (!isSearchOpen.value) return;
       term.value = '';
       isSearchOpen.value = false;
+    };
+    const searchOpen = () => {
+      searchBarVisible.value = true;
+      isSearchOpen.value = true;
     };
 
     searchResults.value = {
@@ -196,6 +244,7 @@ export default {
 
     return {
       accountIcon,
+      iconClicked,
       cartTotalItems,
       closeSearch,
       handleAccountClick,
@@ -203,11 +252,14 @@ export default {
       toggleWishlistSidebar,
       changeSearchTerm,
       term,
+      title,
       handleSearch,
       curCatSlug,
       searchResults,
       categories,
       isSearchOpen,
+      searchBarVisible,
+      searchOpen,
     };
   },
 };
@@ -217,12 +269,13 @@ export default {
 .sf-header {
   --header-padding: var(--spacer-sm);
   @include for-desktop {
-    --header-padding: 0;
+    --header-padding: 10px 20px;
   }
   &__logo-image {
     height: 100%;
   }
 }
+
 .header-on-top {
   z-index: 2;
 }
@@ -230,7 +283,18 @@ export default {
   display: flex;
   white-space: nowrap;
 }
+
 .nav-item {
+  .sf-header-navigation-item__item--desktop > *:not(.sf-mega-menu) {
+    padding: 0 !important;
+  }
+  margin: auto 0;
+  // .sf-link .sf-header-navigation-item__link {
+  // padding: var(--spacer-xxs) var(--spacer-xxs);
+  // }
+  // .sf-header-navigation-item__item--desktop {
+  // pa dding: var(--spacer-md) var(--spacer-xxs);
+  // }
   .sf-header-navigation-item__item--mobile {
     display: none;
   }
@@ -247,5 +311,32 @@ export default {
   ::v-deep &__item--mobile {
     display: block;
   }
+}
+@media (min-width: 1024px) {
+  .sf-header__navigation {
+    display: flex;
+    --header-navigation-margin: 0 !important;
+    order: 0;
+    flex: 0 0 auto;
+  }
+}
+.sf-search-bar {
+  --search-bar-width: 12rem;
+}
+.sf-header__logo-image {
+  margin: auto 0;
+}
+.sf-header__logo {
+  margin-inline: 10px;
+}
+.sf-header__title {
+  margin: 0;
+  font-weight: normal;
+}
+.sf-icon {
+  margin: auto 0;
+}
+.search-icon {
+  margin-inline: 20px;
 }
 </style>

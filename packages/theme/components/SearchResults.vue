@@ -16,11 +16,9 @@
             :title="$t('Categories')"
             class="sf-mega-menu-column--pined-content-on-mobile search__categories"
           >
-            <template #title="{title}">
+            <template #title="{ title }">
               <SfMenuItem :label="title" @click="megaMenu.changeActive(title)">
-                <template #mobile-nav-icon>
-                  &#8203;
-                </template>
+                <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
             <SfList>
@@ -32,9 +30,7 @@
                   :label="category.label"
                   :link="localePath(getCatLink(category))"
                 >
-                  <template #mobile-nav-icon>
-                    &#8203;
-                  </template>
+                  <template #mobile-nav-icon> &#8203; </template>
                 </SfMenuItem>
               </SfListItem>
             </SfList>
@@ -43,14 +39,12 @@
             :title="$t('Product suggestions')"
             class="sf-mega-menu-column--pined-content-on-mobile search__results"
           >
-            <template #title="{title}">
+            <template #title="{ title }">
               <SfMenuItem
                 :label="title"
                 class="sf-mega-menu-column__header search__header"
               >
-                <template #mobile-nav-icon>
-                  &#8203;
-                </template>
+                <template #mobile-nav-icon> &#8203; </template>
               </SfMenuItem>
             </template>
             <SfScrollable
@@ -118,13 +112,13 @@
               </SfProductCard>
             </div>
           </SfMegaMenuColumn>
-          <div class="action-buttons smartphone-only">
+          <!-- <div class="action-buttons">
             <SfButton
-              class="action-buttons__button color-light"
+              class="action-buttons__button color-light smartphone-only"
               @click="$emit('close')"
               >{{ $t('Cancel') }}</SfButton
             >
-          </div>
+          </div> -->
         </div>
         <div v-else key="no-results" class="before-results">
           <SfImage
@@ -132,6 +126,8 @@
             class="before-results__picture"
             alt="error"
             loading="lazy"
+            height="200"
+            width="200"
           />
           <p class="before-results__paragraph">
             {{ $t('You haven’t searched for items yet') }}
@@ -140,7 +136,7 @@
             {{ $t('Let’s start now – we’ll help you') }}
           </p>
           <SfButton
-            class="before-results__button color-secondary smartphone-only"
+            class="before-results__button color-secondary"
             @click="$emit('close')"
             >{{ $t('Go back') }}</SfButton
           >
@@ -158,7 +154,7 @@ import {
   SfScrollable,
   SfMenuItem,
   SfButton,
-  SfImage
+  SfImage,
 } from '@storefront-ui/vue';
 import { ref, watch, computed } from '@vue/composition-api';
 import { productGetters } from '@vue-storefront/shopify';
@@ -172,17 +168,17 @@ export default {
     SfScrollable,
     SfMenuItem,
     SfButton,
-    SfImage
+    SfImage,
   },
   props: {
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     result: {
       type: Object,
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   setup(props, { emit }) {
     const { getCatLink } = useUiHelpers();
@@ -206,9 +202,9 @@ export default {
       isSearchOpen,
       productGetters,
       products,
-      categories
+      categories,
     };
-  }
+  },
 };
 </script>
 
@@ -253,7 +249,7 @@ export default {
 }
 .results {
   &--desktop {
-    --scrollable-max-height: 35vh;
+    --scrollable-max-height: 55vh;
   }
   &--mobile {
     display: flex;
@@ -319,5 +315,14 @@ export default {
     margin: var(--spacer-xl) auto;
     width: 100%;
   }
+}
+
+@media (min-width: 1024px) {
+  .sf-mega-menu__menu {
+    max-height: 450px;
+  }
+}
+.search__wrapper-results {
+  width: 100%;
 }
 </style>

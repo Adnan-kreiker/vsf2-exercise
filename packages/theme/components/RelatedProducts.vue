@@ -6,13 +6,31 @@
         :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
         class="carousel"
       >
-        <SfCarouselItem v-for="(product, i) in products" :key="i" class="carousel__item">
+        <SfCarouselItem
+          v-for="(product, i) in products"
+          :key="i"
+          class="carousel__item"
+        >
           <SfProductCard
             :title="productGetters.getName(product)"
             :image="productGetters.getCoverImage(product)"
-            :regular-price="$n(productGetters.getPrice(product).regular, 'currency')"
-            :special-price="productGetters.getPrice(product).special && $n(productGetters.getPrice(product).special, 'currency')"
-            :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+            :regular-price="
+              $n(productGetters.getPrice(product).regular, 'currency')
+            "
+            :special-price="
+              productGetters.getPrice(product).special &&
+              $n(productGetters.getPrice(product).special, 'currency')
+            "
+            :link="
+              localePath(
+                `/p/${productGetters.getId(product)}/${productGetters.getSlug(
+                  product
+                )}`
+              )
+            "
+            :is-added-to-cart="isInCart({ product })"
+            @click:wishlist="addToWish"
+            @click:add-to-cart="addItem({ product, quantity: 1 })"
           />
         </SfCarouselItem>
       </SfCarousel>
@@ -21,32 +39,39 @@
 </template>
 
 <script lang="ts">
-
 import {
   SfCarousel,
   SfProductCard,
   SfSection,
-  SfLoader
+  SfLoader,
 } from '@storefront-ui/vue';
 
-import { productGetters } from '@vue-storefront/shopify';
-
+import { productGetters, useCart, useWishlist } from '@vue-storefront/shopify';
 export default {
   name: 'RelatedProducts',
   components: {
     SfCarousel,
     SfProductCard,
     SfSection,
-    SfLoader
+    SfLoader,
   },
   props: {
     title: String,
     products: Array,
-    loading: Boolean
+    loading: Boolean,
   },
   setup() {
-    return { productGetters };
-  }
+    const { addItem, isInCart } = useCart();
+    const { addItem: addToWish, isInWishlist, removeItem } = useWishlist();
+    return {
+      productGetters,
+      addItem,
+      isInCart,
+      addToWish,
+      isInWishlist,
+      removeItem,
+    };
+  },
 };
 </script>
 
@@ -56,7 +81,7 @@ export default {
 }
 
 .carousel {
-    margin: 0 calc(var(--spacer-sm) * -1) 0 0;
+  margin: 0 auto;
   @include for-desktop {
     margin: 0;
   }
@@ -64,5 +89,4 @@ export default {
     margin: 1.9375rem 0 2.4375rem 0;
   }
 }
-
 </style>

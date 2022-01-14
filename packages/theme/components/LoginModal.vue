@@ -9,13 +9,25 @@
       <SfBar
         class="sf-modal__bar"
         :close="false"
-        :title="isLogin ? 'Login' : isForgotPassword ? 'Reset password' : 'Create an Account'"
+        :title="
+          isLogin
+            ? 'Login'
+            : isForgotPassword
+            ? 'Reset password'
+            : 'Create an Account'
+        "
       />
     </template>
     <template #close>
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 1L17 17" stroke="#171717" stroke-width="2"/>
-        <path d="M17 1L1 17" stroke="#171717" stroke-width="2"/>
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M1 1L17 17" stroke="#171717" stroke-width="2" />
+        <path d="M17 1L1 17" stroke="#171717" stroke-width="2" />
       </svg>
     </template>
     <transition name="sf-fade" mode="out-in">
@@ -23,7 +35,12 @@
       <div v-if="isLogin">
         <ValidationObserver v-slot="{ handleSubmit }" key="log-in" tag="div">
           <form class="form" @submit.prevent="handleSubmit(handleLogin)">
-            <ValidationProvider v-slot="{ errors }" tag="div" class="relative" rules="required|email">
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              class="relative"
+              rules="required|email"
+            >
               <SfInput
                 v-model="form.username"
                 data-cy="login-input_email"
@@ -34,12 +51,25 @@
                 class="form__element"
               />
               <span class="input-icon">
-                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z" fill="#888888"/>
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z"
+                    fill="#888888"
+                  />
                 </svg>
               </span>
             </ValidationProvider>
-            <ValidationProvider v-slot="{ errors }" tag="div" rules="required|min:5">
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              rules="required|min:5"
+            >
               <SfInput
                 v-model="form.password"
                 data-cy="login-input_password"
@@ -51,7 +81,12 @@
                 class="form__element"
                 has-show-password
               >
-                <template #show-password={isPasswordVisible,switchVisibilityPassword}>
+                <template
+                  #show-password="{
+                    isPasswordVisible,
+                    switchVisibilityPassword,
+                  }"
+                >
                   <SfButton
                     class="sf-input__password-button"
                     type="button"
@@ -68,8 +103,17 @@
                       size="22px"
                     >
                       <template #default>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888">
-                          <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24px"
+                          viewBox="0 0 24 24"
+                          width="24px"
+                          fill="#888888"
+                        >
+                          <path d="M0 0h24v24H0V0z" fill="none" />
+                          <path
+                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"
+                          />
                         </svg>
                       </template>
                     </SfIcon>
@@ -79,7 +123,15 @@
             </ValidationProvider>
             <div class="action-wrap">
               <div class="action">
-                <SfButton data-cy="login-btn_forgot-password" type='button' class="sf-button--text" @click="isLogin = false;isForgotPassword = true">
+                <SfButton
+                  data-cy="login-btn_forgot-password"
+                  type="button"
+                  class="sf-button--text"
+                  @click="
+                    isLogin = false;
+                    isForgotPassword = true;
+                  "
+                >
                   Forgot password?
                 </SfButton>
               </div>
@@ -98,16 +150,32 @@
         </ValidationObserver>
         <div class="modal-bottom">
           <span class="bottom__paragraph">Don’t have account yet?</span>
-          <SfButton data-cy="login-btn_sign-up" class="sf-button--text" @click="isLogin = false">
+          <SfButton
+            data-cy="login-btn_sign-up"
+            class="sf-button--text"
+            @click="isLogin = false"
+          >
             Create an Account
           </SfButton>
         </div>
       </div>
       <!-- FORGOT PASSWORD FORM -->
       <div v-else-if="isForgotPassword">
-        <ValidationObserver v-slot="{ handleSubmit }" key="forgot-password" tag="div">
-          <form class="form" @submit.prevent="handleSubmit(handleForgotPassword)">
-            <ValidationProvider v-slot="{ errors }" tag="div" class="relative" rules="required|email">
+        <ValidationObserver
+          v-slot="{ handleSubmit }"
+          key="forgot-password"
+          tag="div"
+        >
+          <form
+            class="form"
+            @submit.prevent="handleSubmit(handleForgotPassword)"
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              class="relative"
+              rules="required|email"
+            >
               <SfInput
                 v-model="form.username"
                 data-cy="forgot-password-input_email"
@@ -118,8 +186,17 @@
                 class="form__element"
               />
               <span class="input-icon">
-                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z" fill="#888888"/>
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z"
+                    fill="#888888"
+                  />
                 </svg>
               </span>
             </ValidationProvider>
@@ -136,7 +213,14 @@
           </form>
         </ValidationObserver>
         <div class="modal-bottom">
-          <SfButton data-cy="login-btn_sign-up" class="sf-button--text" @click="isForgotPassword=false; isLogin = true;">
+          <SfButton
+            data-cy="login-btn_sign-up"
+            class="sf-button--text"
+            @click="
+              isForgotPassword = false;
+              isLogin = true;
+            "
+          >
             Back to Login
           </SfButton>
         </div>
@@ -144,8 +228,17 @@
       <!-- USER SIGNUP FORM -->
       <div v-else class="form">
         <ValidationObserver v-slot="{ handleSubmit }" key="sign-up">
-          <form class="form" autocomplete="off" @submit.prevent="handleSubmit(handleRegister)">
-            <ValidationProvider v-slot="{ errors }" tag="div" class="relative" rules="required|email">
+          <form
+            class="form"
+            autocomplete="off"
+            @submit.prevent="handleSubmit(handleRegister)"
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              class="relative"
+              rules="required|email"
+            >
               <SfInput
                 v-model="form.email"
                 data-cy="login-input_email"
@@ -156,13 +249,27 @@
                 class="form__element"
               />
               <span class="input-icon">
-                <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z" fill="#888888"/>
+                <svg
+                  width="18"
+                  height="14"
+                  viewBox="0 0 18 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.3333 2.00004C17.3333 1.08337 16.5833 0.333374 15.6666 0.333374H2.33329C1.41663 0.333374 0.666626 1.08337 0.666626 2.00004V12C0.666626 12.9167 1.41663 13.6667 2.33329 13.6667H15.6666C16.5833 13.6667 17.3333 12.9167 17.3333 12V2.00004ZM15.6666 2.00004L8.99996 6.16671L2.33329 2.00004H15.6666ZM15.6666 12H2.33329V3.66671L8.99996 7.83337L15.6666 3.66671V12Z"
+                    fill="#888888"
+                  />
                 </svg>
               </span>
             </ValidationProvider>
             <div class="row">
-              <ValidationProvider v-slot="{ errors }" tag="div" class="col-6" rules="required">
+              <ValidationProvider
+                v-slot="{ errors }"
+                tag="div"
+                class="col-6"
+                rules="required"
+              >
                 <SfInput
                   v-model="form.firstName"
                   data-cy="login-input_firstName"
@@ -173,7 +280,12 @@
                   class="form__element"
                 />
               </ValidationProvider>
-              <ValidationProvider v-slot="{ errors }" tag="div" class="col-6" rules="required">
+              <ValidationProvider
+                v-slot="{ errors }"
+                tag="div"
+                class="col-6"
+                rules="required"
+              >
                 <SfInput
                   v-model="form.lastName"
                   data-cy="login-input_lastName"
@@ -185,7 +297,11 @@
                 />
               </ValidationProvider>
             </div>
-            <ValidationProvider v-slot="{ errors }" tag="div" rules="required|min:5">
+            <ValidationProvider
+              v-slot="{ errors }"
+              tag="div"
+              rules="required|min:5"
+            >
               <SfInput
                 v-model="form.userPassword"
                 data-cy="login-input_password"
@@ -197,7 +313,12 @@
                 class="form__element"
                 has-show-password
               >
-                <template #show-password={isPasswordVisible,switchVisibilityPassword}>
+                <template
+                  #show-password="{
+                    isPasswordVisible,
+                    switchVisibilityPassword,
+                  }"
+                >
                   <SfButton
                     class="sf-input__password-button"
                     type="button"
@@ -214,8 +335,17 @@
                       size="22px"
                     >
                       <template #default>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#888888">
-                          <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24px"
+                          viewBox="0 0 24 24"
+                          width="24px"
+                          fill="#888888"
+                        >
+                          <path d="M0 0h24v24H0V0z" fill="none" />
+                          <path
+                            d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"
+                          />
                         </svg>
                       </template>
                     </SfIcon>
@@ -224,7 +354,10 @@
               </SfInput>
             </ValidationProvider>
             <div class="action-wrap">
-              <ValidationProvider v-slot="{ errors }" :rules="{ required: { allowFalse: false } }">
+              <ValidationProvider
+                v-slot="{ errors }"
+                :rules="{ required: { allowFalse: false } }"
+              >
                 <SfCheckbox
                   v-model="createAccount"
                   :valid="!errors[0]"
@@ -232,15 +365,15 @@
                   name="create-account"
                   class="form__element"
                 >
-                <template #label>
-                  <SfLink
-                  class='sf-button--pure terms-link'
-                  type = 'button'
-                  :link="localePath({name: 'TermsAndConditions'})"
-                  @click.native="toggleLoginModal()"
-                >
-                    Accept Terms &amp; Conditions
-                  </SfLink>
+                  <template #label>
+                    <SfLink
+                      class="sf-button--pure terms-link"
+                      type="button"
+                      :link="localePath({ name: 'TermsAndConditions' })"
+                      @click.native="toggleLoginModal()"
+                    >
+                      Accept Terms &amp; Conditions
+                    </SfLink>
                   </template>
                 </SfCheckbox>
               </ValidationProvider>
@@ -259,7 +392,11 @@
         </ValidationObserver>
         <div class="modal-bottom">
           <span class="bottom__paragraph">Already have an account?</span>
-          <SfButton data-cy="login-btn_login-into-account" class="sf-button--text" @click="isLogin = true">
+          <SfButton
+            data-cy="login-btn_login-into-account"
+            class="sf-button--text"
+            @click="isLogin = true"
+          >
             Login
           </SfButton>
         </div>
@@ -269,25 +406,35 @@
 </template>
 <script type="module">
 import { ref, watch } from '@nuxtjs/composition-api';
-import { SfModal, SfInput, SfButton, SfCheckbox, SfLoader, SfAlert, SfBar, SfIcon, SfLink } from '@storefront-ui/vue';
+import {
+  SfModal,
+  SfInput,
+  SfButton,
+  SfCheckbox,
+  SfLoader,
+  SfAlert,
+  SfBar,
+  SfIcon,
+  SfLink,
+} from '@storefront-ui/vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required, email, min } from 'vee-validate/dist/rules';
 import { useUser } from '@vue-storefront/shopify';
-import { useUiState, useUiNotification} from '~/composables';
+import { useUiState, useUiNotification } from '~/composables';
 
 extend('email', {
   ...email,
-  message: 'Invalid email'
+  message: 'Invalid email',
 });
 
 extend('required', {
   ...required,
-  message: 'This field is required'
+  message: 'This field is required',
 });
 
 extend('min', {
   ...min,
-  message: 'The field should have at least {length} characters'
+  message: 'The field should have at least {length} characters',
 });
 
 export default {
@@ -303,7 +450,7 @@ export default {
     ValidationObserver,
     SfBar,
     SfIcon,
-    SfLink
+    SfLink,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(props, context) {
@@ -315,7 +462,7 @@ export default {
     const createAccount = ref(false);
     const rememberMe = ref(false);
     const { register, login, loading, user } = useUser();
-    const { send: sendNotification} = useUiNotification();
+    const { send: sendNotification } = useUiNotification();
     watch(isLoginModalOpen, () => {
       if (isLoginModalOpen) {
         form.value = {};
@@ -327,21 +474,24 @@ export default {
         if (user.value.error === 'Unidentified customer') {
           user.value.error = 'Sorry! Please try that again';
         } else if (user.value.error === 'Email has already been taken') {
-          user.value.error = 'This email address is already associated with an account. If this account is yours, you can reset your password';
+          user.value.error =
+            'This email address is already associated with an account. If this account is yours, you can reset your password';
         }
         sendNotification({
           key: 'login_failed',
           message: user.value.error,
           type: 'danger',
-          title: 'Failed!'
+          title: 'Failed!',
         });
       } else if (user.value.token && user.value.token === 'forgotPassword') {
         sendNotification({
           key: 'link_sent',
-          message: 'Reset password link has been successfully sent to ' + form.value.username,
+          message:
+            'Reset password link has been successfully sent to ' +
+            form.value.username,
           type: 'success',
           icon: 'check',
-          title: 'linkSent!'
+          title: 'linkSent!',
         });
         isForgotPassword.value = false;
         isLogin.value = true;
@@ -351,11 +501,13 @@ export default {
           message: 'Your registration is successfully done',
           type: 'success',
           icon: 'check',
-          title: 'Sign Up Success!'
+          title: 'Sign Up Success!',
         });
         form.value = {};
         if (process.client) {
-          document.querySelector('button[data-cy="login-btn_login-into-account"]').click();
+          document
+            .querySelector('button[data-cy="login-btn_login-into-account"]')
+            .click();
         }
       } else {
         toggleLoginModal();
@@ -364,7 +516,7 @@ export default {
           message: 'You are successfully logged in',
           type: 'success',
           title: 'Success!',
-          icon: 'check'
+          icon: 'check',
         });
         $router.push('/my-account');
       }
@@ -388,34 +540,34 @@ export default {
       handleRegister,
       sendNotification,
       isForgotPassword,
-      handleForgotPassword
+      handleForgotPassword,
     };
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data () {
+  data() {
     return {
       isPasswordVisible: false,
-      inputType: 'password'
+      inputType: 'password',
     };
   },
   methods: {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    switchVisibilityPassword () {
+    switchVisibilityPassword() {
       this.isPasswordVisible = !this.isPasswordVisible;
       this.inputType = this.isPasswordVisible ? 'text' : 'password';
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .action-wrap {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 26px;
-    @include for-mobile {
-      margin-bottom: 16px;
-    }
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 26px;
+  @include for-mobile {
+    margin-bottom: 16px;
+  }
 }
 .action {
   .sf-button {
@@ -432,7 +584,7 @@ export default {
     }
   }
 }
-.sf-button[data-cy="login-btn_submit"] {
+.sf-button[data-cy='login-btn_submit'] {
   font-family: var(--font-family--primary);
   font-weight: 400;
   font-size: 20px;
@@ -446,7 +598,7 @@ export default {
     min-height: 51px;
   }
   &:hover {
-    background-color: var(--_c-black-171717);
+    background-color: var(--_c-red-secondary);
   }
 }
 .user-modal {
@@ -488,7 +640,7 @@ export default {
     width: 100%;
     height: auto;
     max-width: 500px;
-    max-height: 90%;
+    max-height: 450px;
     margin: auto;
     border-radius: 8px;
     overflow: hidden;
