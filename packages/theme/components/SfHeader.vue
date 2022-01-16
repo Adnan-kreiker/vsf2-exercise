@@ -27,18 +27,8 @@
               <h3 class="sf-header__title">{{ title }}</h3> -->
             </SfLink>
           </slot>
-          <slot
-            name="header-icons"
-            v-bind="{
-              activeIcon,
-              cartHasProducts,
-              cartItemsQty,
-              cartIcon,
-              wishlistIcon,
-              accountIcon,
-            }"
-          >
-            <div class="sf-header__icons">
+          <slot name="header-icons">
+            <!-- <div class="sf-header__icons">
               <SfButton
                 :class="{ 'display-none': !accountIcon }"
                 class="sf-button--pure sf-header__action"
@@ -90,10 +80,9 @@
                   }"
                 />
               </SfButton>
-            </div>
+            </div> -->
           </slot>
         </div>
-        <div><hr class="sf-divider" /></div>
         <sf-divider></sf-divider>
 
         <!-- <div class="sf-header__aside">
@@ -321,5 +310,10 @@ export default {
 }
 .top-header-wrapper {
   align-items: center;
+}
+.sf-divider {
+  padding: 1px;
+  width: 90%;
+  background: var(--_c-red-primary);
 }
 </style>

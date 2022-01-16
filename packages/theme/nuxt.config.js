@@ -52,7 +52,7 @@ const config = {
     // ],
   },
   loading: { color: '#fff' },
-  plugins: ['~/plugins/scrollToTop.client.js'],
+  plugins: [{ src: '~/plugins/scrollToTop.client.js', mode: 'client' }],
   buildModules: [
     // to core
     '@nuxtjs/composition-api/module',

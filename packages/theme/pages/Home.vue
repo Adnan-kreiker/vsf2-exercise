@@ -14,8 +14,9 @@
       <template #prev> <span></span> </template>
       <template #next> <span></span> </template>
     </SfHero>
+    <BestSellers></BestSellers>
     <ShoppingFor></ShoppingFor>
-    <LazyHydrate when-visible>
+    <!-- <LazyHydrate when-visible>
       <SfBannerGrid :banner-grid="1" class="banner-grid">
         <template v-for="item in banners" #[item.slot]>
           <SfBanner
@@ -29,7 +30,7 @@
           />
         </template>
       </SfBannerGrid>
-    </LazyHydrate>
+    </LazyHydrate> -->
     <LazyHydrate when-visible>
       <RelatedProducts
         :products="products"
@@ -66,16 +67,18 @@ import LazyHydrate from 'vue-lazy-hydration';
 import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import ShoppingFor from '~/components/ShoppingFor.vue';
+import BestSellers from '~/components/BestSellers.vue';
 
 export default {
   name: 'Home',
   components: {
+    BestSellers,
     SfHero,
     RelatedProducts,
-    SfBanner,
+    // SfBanner,
     SfCallToAction,
     ShoppingFor,
-    SfBannerGrid,
+    // SfBannerGrid,
     MobileStoreBanner,
     LazyHydrate,
   },
@@ -85,11 +88,11 @@ export default {
       products: relatedProducts,
       search: productsSearch,
       loading: productsLoading,
-    } = useProduct('relatedProducts');
+    } = useProduct('products');
     const { cart, load: loadCart, addItem: addToCart, isInCart } = useCart();
 
     onSSR(async () => {
-      await productsSearch({ limit: 8 });
+      await productsSearch({ limit: 10, collections: 'accessories' });
       await loadCart();
     });
     return {
@@ -244,12 +247,13 @@ export default {
     width: 100%;
   }
 }
-
+::v-deep .glide__track {
+  min-height: 350px !important;
+  max-height: calc(100vh - 111px) !important;
+}
 .hero {
   /* max-height: 545px; */
-  .glide-track {
-    height: 200px;
-  }
+
   margin: var(--spacer-xs) auto var(--spacer-lg);
   --hero-item-background-position: center;
   ::v-deep .sf-link:hover {
@@ -275,6 +279,10 @@ export default {
 
 ::v-deep .sf-hero__controls {
   --hero-controls-display: none;
+}
+
+::v-deep .sf-hero-item {
+  min-height: 350px;
 }
 
 .banner-grid {

@@ -1,14 +1,8 @@
 <template>
   <div>
-    <!-- <LazyHydrate when-visible>
-      <TopBar class="desktop-only" />
-    </LazyHydrate> -->
-
     <AppHeader />
-
     <div id="layout">
       <nuxt :key="route.fullPath" />
-
       <BottomNavigation />
       <CartSidebar />
       <WishlistSidebar />
@@ -22,11 +16,9 @@
 </template>
 
 <script>
-import '@storefront-ui/vue/styles.scss';
 import AppHeader from '~/components/AppHeader.vue';
 import BottomNavigation from '~/components/BottomNavigation.vue';
 import AppFooter from '~/components/AppFooter.vue';
-// import TopBar from '~/components/TopBar.vue';
 import CartSidebar from '~/components/CartSidebar.vue';
 import WishlistSidebar from '~/components/WishlistSidebar.vue';
 import LoginModal from '~/components/LoginModal.vue';
@@ -46,7 +38,6 @@ export default {
 
   components: {
     LazyHydrate,
-    // TopBar,
     AppHeader,
     BottomNavigation,
     AppFooter,
@@ -82,12 +73,13 @@ export default {
   @include assign-color-variants(--c-primary-variant, --_c-red-secondary);
   --font-family--primary: 'Roboto Mono';
   --font-family--secondary: 'Montserrat';
+  --_c-red-secondary: #e73b24c0;
 }
 
 #layout {
   box-sizing: border-box;
   @include for-desktop {
-    max-width: 1440px;
+    max-width: 100%;
     margin: auto;
   }
 }
@@ -149,11 +141,6 @@ p {
   font-family: var(--font-family--secondary);
 }
 
-.sf-button[data-cy='login-btn_submit'] {
-  &:hover {
-    background-color: var(--_c-black-171717);
-  }
-}
 .sf-header-navigation-item__item--desktop > *:not(.sf-mega-menu) {
   padding-top: var(--spacer-sm);
   padding-bottom: var(--spacer-sm);
@@ -162,13 +149,13 @@ p {
 .sf-header__header {
   padding: 0;
 }
-.hero {
-  /* max-height: 545px; */
-  .glide__track {
-    max-height: calc(100vh - 111px);
-  }
-}
 h1.sf-header__title {
   font-size: 25px;
+}
+div#section div.sf-section__content {
+  margin: var(--spacer-sm) !important;
+}
+.sf-section__content {
+  margin: var(--spacer-base) !important;
 }
 </style>

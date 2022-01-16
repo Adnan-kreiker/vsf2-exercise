@@ -46,10 +46,12 @@ export default {
 <style scoped>
 .suggestion-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
 .suggestion {
   position: relative;
+  margin-top: var(--spacer-base);
 }
 .suggestion-text {
   position: absolute;
@@ -65,6 +67,7 @@ export default {
 }
 img {
   width: 100%;
+  max-width: 375px;
   height: 500px;
   object-fit: cover;
 }

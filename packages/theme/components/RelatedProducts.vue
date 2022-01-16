@@ -3,7 +3,7 @@
     <SfLoader :class="{ loading }" :loading="loading">
       <SfCarousel
         data-cy="related-products-carousel"
-        :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }"
+        :settings="pdpUpsellSettings"
         class="carousel"
       >
         <SfCarouselItem
@@ -72,6 +72,29 @@ export default {
       removeItem,
     };
   },
+  data() {
+    return {
+      pdpUpsellSettings: {
+        type: 'slider',
+        perView: 4,
+        peek: 0,
+        autoplay: false,
+        animationDuration: 600,
+        gap: 20,
+        breakpoints: {
+          1270: {
+            perView: 3,
+          },
+          767: {
+            perView: 2,
+          },
+          510: {
+            perView: 1,
+          },
+        },
+      },
+    };
+  },
 };
 </script>
 
@@ -87,6 +110,31 @@ export default {
   }
   &__item {
     margin: 1.9375rem 0 2.4375rem 0;
+    max-width: 200px;
+  }
+}
+.sf-product-card {
+  margin: var(--spacer-base) var(--spacer-sm);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+  min-width: 14rem;
+  border-radius: 20px;
+}
+::v-deep .sf-heading__title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+@media (min-width: 1160px;) {
+  ::v-deep .sf-carousel__wrapper .glide .glide__track {
+    max-height: 700px !important;
+  }
+}
+::v-deep .sf-carousel__wrapper .glide .glide__track {
+  max-height: 480px !important;
+}
+@media (min-width: 1024px) {
+  .sf-section {
+    --section-margin: var(--spacer-lg);
   }
 }
 </style>
+::v-deep .glide__track {

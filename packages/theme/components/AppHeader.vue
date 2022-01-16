@@ -21,11 +21,11 @@
         <locale-selector></locale-selector>
       </template>
       <template #searchIcon>
-        <SfButton class="sf-button--pure sf-header__action" @click="searchOpen">
+        <SfButton class="search-button" @click="searchOpen">
           <SfIcon
             icon="search"
             size="xs"
-            color="black-primary"
+            color="gray-primary"
             viewBox="0 0 24 24"
             :coverage="1"
             class="search-icon"
@@ -198,7 +198,7 @@ export default {
       toggleLoginModal();
     };
 
-    const title = ref('Vue Storefront 2');
+    const title = ref('My Store');
     const iconClicked = () => {
       searchBarVisible.value = !searchBarVisible.value;
     };
@@ -337,6 +337,9 @@ export default {
   margin: auto 0;
 }
 .search-icon {
-  margin-inline: 20px;
+  margin: 0 auto;
+}
+.search-button {
+  background: #fff;
 }
 </style>

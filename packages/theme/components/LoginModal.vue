@@ -601,6 +601,9 @@ export default {
     background-color: var(--_c-red-secondary);
   }
 }
+.sf-button--text:hover {
+  background-color: #fff;
+}
 .user-modal {
   .modal-bottom {
     margin-top: 30px;
@@ -631,9 +634,9 @@ export default {
       @include for-mobile {
         font-size: 12px;
       }
-      &:hover {
-        color: var(--_c-black-171717);
-      }
+      // &:hover {
+      //   color: var(--_c-black-171717);
+      // }
     }
   }
   .sf-modal__container {

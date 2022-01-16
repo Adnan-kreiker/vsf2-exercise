@@ -1,5 +1,8 @@
 <template>
-  <SfSection :title-heading="title" class="section pdc-sec-title pdp-upsell-section">
+  <SfSection
+    :title-heading="title"
+    class="section pdc-sec-title pdp-upsell-section"
+  >
     <SfLoader :class="{ loading }" :loading="loading">
       <SfCarousel
         ref="bscarousel"
@@ -7,11 +10,21 @@
         :settings="pdpUpsellSettings"
         class="carousel"
       >
-        <SfCarouselItem v-for="(product, i) in products" :key="i" class="carousel__item">
+        <SfCarouselItem
+          v-for="(product, i) in products"
+          :key="i"
+          class="carousel__item"
+        >
           <SfProductCard
             :title="productGetters.getName(product)"
             :image="productGetters.getPDPCoverImage(product, 'medium')"
-            :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+            :link="
+              localePath(
+                `/p/${productGetters.getId(product)}/${productGetters.getSlug(
+                  product
+                )}`
+              )
+            "
             :wishlist-icon="false"
             :image-width="295"
             :image-height="295"
@@ -21,23 +34,37 @@
               <!-- RYVIU APP :: COLLECTION-WIDGET-TOTAL -->
               <SfLink
                 class="sf-product-card__link"
-                :link="localePath(`/p/${productGetters.getId(product)}/${productGetters.getSlug(product)}`)"
+                :link="
+                  localePath(
+                    `/p/${productGetters.getId(
+                      product
+                    )}/${productGetters.getSlug(product)}`
+                  )
+                "
               >
-                  <h3 class="sf-product-card__title">
+                <h3 class="sf-product-card__title">
                   {{ productGetters.getName(product) }}
                 </h3>
               </SfLink>
             </template>
             <template #price>
-              <SfPrice
-                class="sf-product-card__price"
-              >
-                <template v-if="productGetters.getPrice(product).special" #special>
-                  <ins class="sf-price__special">{{ $n(productGetters.getPrice(product).special, 'currency') }}</ins>
+              <SfPrice class="sf-product-card__price">
+                <template
+                  v-if="productGetters.getPrice(product).special"
+                  #special
+                >
+                  <ins class="sf-price__special">{{
+                    $n(productGetters.getPrice(product).special, 'currency')
+                  }}</ins>
                 </template>
-                <template #old><span/></template>
-                <template v-if="productGetters.getPrice(product).regular > 0" #regular>
-                  <del class="sf-price__old">{{ $n(productGetters.getPrice(product).regular, 'currency') }}</del>
+                <template #old><span /></template>
+                <template
+                  v-if="productGetters.getPrice(product).regular > 0"
+                  #regular
+                >
+                  <del class="sf-price__old">{{
+                    $n(productGetters.getPrice(product).regular, 'currency')
+                  }}</del>
                 </template>
               </SfPrice>
             </template>
@@ -49,14 +76,13 @@
 </template>
 
 <script lang="ts">
-
 import {
   SfCarousel,
   SfProductCard,
   SfSection,
   SfLoader,
   SfLink,
-  SfPrice
+  SfPrice,
 } from '@storefront-ui/vue';
 import { productGetters } from '@vue-storefront/shopify';
 
@@ -68,19 +94,19 @@ export default {
     SfSection,
     SfLoader,
     SfLink,
-    SfPrice
+    SfPrice,
   },
   props: {
     title: String,
     products: Array,
-    loading: Boolean
+    loading: Boolean,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup() {
     return { productGetters };
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  data () {
+  data() {
     return {
       pdpUpsellSettings: {
         type: 'slider',
@@ -94,27 +120,27 @@ export default {
             perView: 3,
             peek: {
               before: 0,
-              after: 72
-            }
+              after: 72,
+            },
           },
           767: {
             perView: 2,
             peek: {
               before: 0,
-              after: 72
-            }
+              after: 72,
+            },
           },
           510: {
             perView: 1,
             peek: {
               before: 0,
-              after: 72
-            }
-          }
-        }
-      }
+              after: 72,
+            },
+          },
+        },
+      },
     };
-  }
+  },
 };
 </script>
 

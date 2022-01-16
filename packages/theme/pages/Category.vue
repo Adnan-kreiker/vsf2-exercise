@@ -1,7 +1,10 @@
 <template>
   <div id="category">
-    <SfBreadcrumbs class="breadcrumbs breadcrumbs-center" :breadcrumbs="breadcrumbs">
-      <template #link="{breadcrumb}">
+    <SfBreadcrumbs
+      class="breadcrumbs breadcrumbs-center"
+      :breadcrumbs="breadcrumbs"
+    >
+      <template #link="{ breadcrumb }">
         <nuxt-link
           :data-testid="breadcrumb.text"
           :to="breadcrumb.route.link"
@@ -15,7 +18,7 @@
     <div class="navbar section">
       <div class="navbar__main">
         <div class="navbar__sort desktop-only">
-          <span class="navbar__label">{{ $t("Sort by") }}:</span>
+          <span class="navbar__label">{{ $t('Sort by') }}:</span>
           <SfSelect
             :value="sortBy.selected"
             placeholder="Select sorting"
@@ -34,7 +37,7 @@
         </div>
         <div class="navbar__counter">
           <span class="navbar__label desktop-only"
-            >{{ $t("Products found") }}:
+            >{{ $t('Products found') }}:
           </span>
           <span class="desktop-only">{{ pagination.totalItems }}</span>
           <span class="navbar__label smartphone-only"
@@ -42,7 +45,7 @@
           >
         </div>
         <div class="navbar__view">
-          <span class="navbar__view-label desktop-only">{{ $t("View") }}</span>
+          <span class="navbar__view-label desktop-only">{{ $t('View') }}</span>
           <SfIcon
             data-cy="category-icon_grid-view"
             class="navbar__view-icon"
@@ -107,7 +110,7 @@
               "
               class="products__product-card"
               @click:wishlist="addItemToWishlist({ product })"
-              @click:add-to-cart="HandleAddTocart({ product, quantity:1 })"
+              @click:add-to-cart="HandleAddTocart({ product, quantity: 1 })"
             />
           </transition-group>
           <transition-group
@@ -144,7 +147,7 @@
                 )
               "
               @click:wishlist="addItemToWishlist({ product })"
-              @click:add-to-cart="HandleAddTocart({ product, qty:1 })"
+              @click:add-to-cart="HandleAddTocart({ product, qty: 1 })"
             >
               <template #configuration>
                 <SfProperty
@@ -296,7 +299,7 @@ import {
   SfBreadcrumbs,
   SfLoader,
   SfColor,
-  SfProperty
+  SfProperty,
 } from '@storefront-ui/vue';
 import { computed, onMounted } from '@nuxtjs/composition-api';
 import {
@@ -304,7 +307,7 @@ import {
   useWishlist,
   productGetters,
   useFacet,
-  facetGetters
+  facetGetters,
 } from '@vue-storefront/shopify';
 import { useUiHelpers, useUiState, useUiNotification } from '~/composables';
 import { onSSR } from '@vue-storefront/core';
@@ -324,7 +327,7 @@ export default {
     SfLoader,
     SfColor,
     SfHeading,
-    SfProperty
+    SfProperty,
   },
   transition: 'fade',
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -366,7 +369,7 @@ export default {
       addItemToCart,
       isInCart,
       isFacetColor,
-      toggleCategoryGridView
+      toggleCategoryGridView,
     };
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -376,13 +379,13 @@ export default {
       breadcrumbs: [
         {
           text: 'Home',
-          route: { link: '/' }
+          route: { link: '/' },
         },
         {
           text: this.removeSpaceFromText(this.$route.params.slug_1),
-          route: { link: '#' }
-        }
-      ]
+          route: { link: '#' },
+        },
+      ],
     };
   },
   methods: {
@@ -394,7 +397,7 @@ export default {
           message: 'Product has been successfully added to cart !',
           type: 'success',
           title: 'Product added!',
-          icon: 'check'
+          icon: 'check',
         });
       });
     },
@@ -406,17 +409,21 @@ export default {
         frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
       }
       return frags.join(' ');
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 #category {
   box-sizing: border-box;
+  min-height: calc(100vh - 111px);
+  padding-inline: var(--spacer-lg);
+
   @include for-desktop {
-    max-width: 1240px;
+    // max-width: 1240px;
     margin: 0 auto;
+    padding-inline: var(--spacer-lg);
   }
 }
 .main {
