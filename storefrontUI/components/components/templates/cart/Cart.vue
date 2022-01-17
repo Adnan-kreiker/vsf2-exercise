@@ -2,6 +2,7 @@
   <div id="cart">
     <SfSidebar
       :visible="isCartSidebarOpen"
+      :persistent="false"
       title="My Cart"
       class="sf-sidebar--right sf-sidebar--icon"
       @close="() => {}"
@@ -78,10 +79,7 @@
           <div v-if="totalItems">
             <SfProperty
               name="Total price"
-              class="
-                sf-property--full-width sf-property--large
-                my-cart__total-price
-              "
+              class="sf-property--full-width sf-property--large my-cart__total-price"
             >
               <template #value>
                 <SfPrice :regular="totalPrice" />
@@ -110,9 +108,9 @@ import {
   SfPrice,
   SfImage,
   SfCollectedProduct,
-} from "@storefront-ui/vue";
+} from '@storefront-ui/vue';
 export default {
-  name: "Cart",
+  name: 'Cart',
   components: {
     SfSidebar,
     SfButton,
@@ -127,37 +125,37 @@ export default {
       isCartSidebarOpen: true,
       products: [
         {
-          title: "Cream Beach Bag Modern Style",
-          id: "CBB1",
-          image: "assets/storybook/Home/productA.jpg",
-          price: { regular: "$50.00" },
+          title: 'Cream Beach Bag Modern Style',
+          id: 'CBB1',
+          image: 'assets/storybook/Home/productA.jpg',
+          price: { regular: '$50.00' },
           configuration: [
-            { name: "Size", value: "XS" },
-            { name: "Color", value: "White" },
+            { name: 'Size', value: 'XS' },
+            { name: 'Color', value: 'White' },
           ],
-          qty: "1",
+          qty: '1',
         },
         {
-          title: "Cream Beach Bag Modern Style",
-          id: "CBB2",
-          image: "assets/storybook/Home/productB.jpg",
-          price: { regular: "$50.00" },
+          title: 'Cream Beach Bag Modern Style',
+          id: 'CBB2',
+          image: 'assets/storybook/Home/productB.jpg',
+          price: { regular: '$50.00' },
           configuration: [
-            { name: "Size", value: "XS" },
-            { name: "Color", value: "White" },
+            { name: 'Size', value: 'XS' },
+            { name: 'Color', value: 'White' },
           ],
-          qty: "2",
+          qty: '2',
         },
         {
-          title: "Cream Beach Bag Modern Style",
-          id: "CBB3",
-          image: "assets/storybook/Home/productC.jpg",
-          price: { regular: "$50.00" },
+          title: 'Cream Beach Bag Modern Style',
+          id: 'CBB3',
+          image: 'assets/storybook/Home/productC.jpg',
+          price: { regular: '$50.00' },
           configuration: [
-            { name: "Size", value: "XS" },
-            { name: "Color", value: "White" },
+            { name: 'Size', value: 'XS' },
+            { name: 'Color', value: 'White' },
           ],
-          qty: "1",
+          qty: '1',
         },
       ],
     };
@@ -173,8 +171,8 @@ export default {
       return this.products
         .reduce((totalPrice, product) => {
           const price = product.price.special
-            ? product.price.special.replace("$", "")
-            : product.price.regular.replace("$", "");
+            ? product.price.special.replace('$', '')
+            : product.price.regular.replace('$', '');
           const summary = parseFloat(price).toFixed(2) * product.qty;
           return totalPrice + summary;
         }, 0)
@@ -190,7 +188,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~@storefront-ui/vue/styles";
+@import '~@storefront-ui/vue/styles';
 #cart {
   @include for-desktop {
     & > * {

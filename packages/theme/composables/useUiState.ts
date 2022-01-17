@@ -1,16 +1,22 @@
 import { reactive, computed } from '@nuxtjs/composition-api';
 
 const state = reactive({
+  isMenuSidebarOpen: false,
   isCartSidebarOpen: false,
   isWishlistSidebarOpen: false,
   isLoginModalOpen: false,
   isCategoryGridView: true,
   isFilterSidebarOpen: false,
-  isNavigationSidebarOpen: false
+  isNavigationSidebarOpen: false,
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useUiState = () => {
+  const isMenuSidebarOpen = computed(() => state.isMenuSidebarOpen);
+  const toggleMenuSidebar = () => {
+    state.isMenuSidebarOpen = !state.isMenuSidebarOpen;
+  };
+
   const isCartSidebarOpen = computed(() => state.isCartSidebarOpen);
   const toggleCartSidebar = () => {
     state.isCartSidebarOpen = !state.isCartSidebarOpen;
@@ -42,18 +48,20 @@ const useUiState = () => {
   };
 
   return {
+    isMenuSidebarOpen,
     isCartSidebarOpen,
     isWishlistSidebarOpen,
     isLoginModalOpen,
     isCategoryGridView,
     isFilterSidebarOpen,
     isNavigationSidebarOpen,
+    toggleMenuSidebar,
     toggleCartSidebar,
     toggleWishlistSidebar,
     toggleLoginModal,
     toggleCategoryGridView,
     toggleFilterSidebar,
-    toggleNavigationSidebar
+    toggleNavigationSidebar,
   };
 };
 

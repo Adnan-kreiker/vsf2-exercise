@@ -20,6 +20,7 @@
       icon="menu"
       size="20px"
       label="Menu"
+      @click="toggleMenuSidebar"
     />
     <SfBottomNavigationItem
       data-cy="bottom-navigation-url_wishlist"
@@ -68,8 +69,12 @@ export default {
     SfCircleIcon,
   },
   setup(props, { root }) {
-    const { toggleCartSidebar, toggleWishlistSidebar, toggleLoginModal } =
-      useUiState();
+    const {
+      toggleCartSidebar,
+      toggleWishlistSidebar,
+      toggleLoginModal,
+      toggleMenuSidebar,
+    } = useUiState();
     const { isAuthenticated } = useUser();
 
     const handleAccountClick = async () => {
@@ -81,6 +86,7 @@ export default {
 
     return {
       toggleWishlistSidebar,
+      toggleMenuSidebar,
       toggleCartSidebar,
       handleAccountClick,
     };

@@ -34,14 +34,14 @@
       </template>
       <template #logo>
         <nuxt-link :to="localePath('/')" class="sf-header__logo">
-          <SfImage
+          <!-- <SfImage
             src="/icons/logo.png"
             alt="Vue Storefront Next"
             class="sf-header__logo-image"
             width="30"
             height="30"
             title="Vue Storefront 2"
-          />
+          /> -->
         </nuxt-link>
         <h1 class="sf-header__title">{{ title }}</h1>
       </template>

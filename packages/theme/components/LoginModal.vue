@@ -2,7 +2,7 @@
   <SfModal
     :visible="isLoginModalOpen"
     class="modal user-modal"
-    :persistent="true"
+    :persistent="false"
     @close="toggleLoginModal"
   >
     <template #modal-bar>

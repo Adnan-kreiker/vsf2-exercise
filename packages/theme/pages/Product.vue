@@ -640,20 +640,21 @@ export default {
   }
 }
 .pdc-pdp-loader {
-  min-height: 200px;
+  min-height: 400px;
   padding: 100px 0;
 }
 .is-fixed {
   @media (min-width: 1024px) {
     position: fixed;
     right: 2%;
-    top: 1%;
-    width: 52%;
+    top: 0;
+    width: 52.5%;
     overflow-x: hidden;
     overflow-y: auto;
     margin-top: 0;
     // overf  low: auto;
-    max-height: 100vh;
+    // max-height: 100vh;
+    height: 100%;
   }
 }
 ::-webkit-scrollbar {
@@ -664,7 +665,7 @@ export default {
     position: absolute;
     bottom: -140px;
     right: 2%;
-    width: 52%;
+    width: 52.5%;
   }
 }
 
@@ -694,6 +695,7 @@ export default {
 }
 .product {
   position: relative;
+  min-height: 100vh;
   @include for-desktop {
     display: flex;
   }

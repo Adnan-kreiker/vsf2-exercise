@@ -5,7 +5,7 @@
       title="Shopping Bag"
       :subtitle="`${totalItems} items`"
       class="sf-sidebar--right"
-      :persistent="true"
+      :persistent="false"
       @close="toggleCartSidebar"
     >
       <template #bar>
@@ -101,7 +101,7 @@
                         <ins class="sf-price__special">{{
                           $n(
                             cartGetters.getItemPrice(product).special,
-                            "currency"
+                            'currency'
                           )
                         }}</ins>
                       </template>
@@ -113,7 +113,7 @@
                         <del class="sf-price__old">{{
                           $n(
                             cartGetters.getItemPrice(product).regular,
-                            "currency"
+                            'currency'
                           )
                         }}</del>
                       </template>
@@ -146,10 +146,7 @@
           <div v-if="totalItems">
             <SfProperty
               name="Estimated Total"
-              class="
-                sf-property--full-width sf-property--large
-                my-cart__total-price
-              "
+              class="sf-property--full-width sf-property--large my-cart__total-price"
             >
               <template #value>
                 <SfPrice :regular="$n(totals.subtotal, 'currency')" />
@@ -171,11 +168,7 @@
               @click="handleCheckout(checkoutURL, parseFloat(totals.subtotal))"
             >
               <SfButton
-                class="
-                  sf-button--full-width
-                  color-secondary
-                  sf-proceed_to_checkout
-                "
+                class="sf-button--full-width color-secondary sf-proceed_to_checkout"
                 @click="toggleCartSidebar"
               >
                 Go To Checkout
@@ -206,13 +199,12 @@ import {
   SfImage,
   SfLink,
   SfNotification,
-  SfLoader
+  SfLoader,
 } from '@storefront-ui/vue';
 import { computed, onBeforeMount } from '@nuxtjs/composition-api';
 import { useCart, useUser, cartGetters } from '@vue-storefront/shopify';
 import { useUiState, useUiNotification } from '~/composables';
 import { onSSR } from '@vue-storefront/core';
-
 
 export default {
   name: 'Cart',
@@ -227,10 +219,10 @@ export default {
     SfImage,
     SfLink,
     SfNotification,
-    SfLoader
+    SfLoader,
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  setup(props, {root}) {
+  setup(props, { root }) {
     const { isCartSidebarOpen, toggleCartSidebar } = useUiState();
     const { cart, removeItem, updateItemQty, load: loadCart } = useCart();
     const { isAuthenticated } = useUser();
@@ -244,11 +236,11 @@ export default {
       await loadCart();
     });
     onBeforeMount(async () => {
-        await loadCart().then(() => {
-          if (cart && cart.value.orderStatusUrl !== null) {
-            root.$cookies.remove(`${root.$config.appKey}_cart_id`); 
-          }
-        });
+      await loadCart().then(() => {
+        if (cart && cart.value.orderStatusUrl !== null) {
+          root.$cookies.remove(`${root.$config.appKey}_cart_id`);
+        }
+      });
     });
 
     return {
@@ -263,7 +255,7 @@ export default {
       cartGetters,
       checkoutURL,
       sendNotification,
-      notifications
+      notifications,
     };
   },
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -271,7 +263,7 @@ export default {
     return {
       visible: false,
       isLoadervisible: false,
-      productToRemove: ''
+      productToRemove: '',
     };
   },
   watch: {
@@ -281,15 +273,15 @@ export default {
       handler(n) {
         this.dataAmount = n;
       },
-      deep: true
+      deep: true,
     },
     totals: {
       // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       handler(n) {
         this.dataAmount = n.subtotal;
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   methods: {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -311,7 +303,7 @@ export default {
           message: `${productObj.product.title} has been successfully removed from your cart.`,
           type: 'success',
           title: 'Product removed!',
-          icon: 'check'
+          icon: 'check',
         });
       });
     },
@@ -320,8 +312,8 @@ export default {
       setTimeout(() => {
         window.location.replace(checkoutUrl);
       }, 400);
-    }
-  }
+    },
+  },
 };
 </script>
 

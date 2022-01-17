@@ -4,6 +4,7 @@
     <div id="layout">
       <nuxt :key="route.fullPath" />
       <BottomNavigation />
+      <MenuSidebar />
       <CartSidebar />
       <WishlistSidebar />
       <LoginModal />
@@ -24,6 +25,7 @@ import WishlistSidebar from '~/components/WishlistSidebar.vue';
 import LoginModal from '~/components/LoginModal.vue';
 import LazyHydrate from 'vue-lazy-hydration';
 import Notification from '~/components/Notification';
+import MenuSidebar from '~/components/MenuSidebar';
 import { onSSR } from '@vue-storefront/core';
 import { useRoute } from '@nuxtjs/composition-api';
 import {
@@ -38,6 +40,7 @@ export default {
 
   components: {
     LazyHydrate,
+    MenuSidebar,
     AppHeader,
     BottomNavigation,
     AppFooter,

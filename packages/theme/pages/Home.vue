@@ -16,21 +16,6 @@
     </SfHero>
     <BestSellers></BestSellers>
     <ShoppingFor></ShoppingFor>
-    <!-- <LazyHydrate when-visible>
-      <SfBannerGrid :banner-grid="1" class="banner-grid">
-        <template v-for="item in banners" #[item.slot]>
-          <SfBanner
-            :key="item.slot"
-            :title="item.title"
-            :subtitle="item.subtitle"
-            :description="item.description"
-            :button-text="item.buttonText"
-            :image="item.image"
-            :class="item.class"
-          />
-        </template>
-      </SfBannerGrid>
-    </LazyHydrate> -->
     <LazyHydrate when-visible>
       <RelatedProducts
         :products="products"
@@ -41,25 +26,20 @@
 
     <LazyHydrate when-visible>
       <SfCallToAction
-        title="Subscribe to Newsletters"
-        button-text="Subscribe"
-        description="Be aware of upcoming sales and events. Receive gifts and special offers!"
-        image="https://cdn.shopify.com/s/files/1/0407/1902/4288/files/newsletter_1240x202.jpg?v=1616496568"
+        title="BECOME A MEMBER"
+        button-text="SIGN UP FOR FREE"
+        description="Get 50% off just by registering"
+        image="/homepage/cta.jpg"
         class="call-to-action"
       />
     </LazyHydrate>
     <LazyHydrate when-visible>
-      <MobileStoreBanner />
+      <Trending />
     </LazyHydrate>
   </div>
 </template>
 <script type="module">
-import {
-  SfHero,
-  SfBanner,
-  SfCallToAction,
-  SfBannerGrid,
-} from '@storefront-ui/vue';
+import { SfHero, SfCallToAction } from '@storefront-ui/vue';
 import { useProduct, useCart, productGetters } from '@vue-storefront/shopify';
 import { computed } from '@nuxtjs/composition-api';
 import { onSSR } from '@vue-storefront/core';
@@ -68,11 +48,13 @@ import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import ShoppingFor from '~/components/ShoppingFor.vue';
 import BestSellers from '~/components/BestSellers.vue';
+import Trending from '~/components/Trending.vue';
 
 export default {
   name: 'Home',
   components: {
     BestSellers,
+    Trending,
     SfHero,
     RelatedProducts,
     // SfBanner,
