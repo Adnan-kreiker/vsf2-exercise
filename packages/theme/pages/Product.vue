@@ -24,15 +24,11 @@
     </SfBreadcrumbs>
 
     <div class="product">
-      <SfGallery
-        :images="productGallery"
-        :current="ActiveVariantImage + 1"
-        class="product__gallery"
-        image-width="422"
-        image-height="664"
-        thumb-width="422"
-        thumb-height="664"
-      />
+      <div class="gallery">
+        <div v-for="(img, i) in productGallery" :key="i" class="img-container">
+          <img class="gallery-img" :src="img.desktop.url" alt="" />
+        </div>
+      </div>
       <div class="product__info__container">
         <div id="product-info" class="product__info">
           <div class="product__header">
@@ -236,8 +232,6 @@
         </div>
       </div>
     </div>
-    <!-- <LazyHydrate when-visible> -->
-    <!-- <Intersect @leave="pinned = false" @enter="pinned = true"> -->
     <RelatedProducts
       id="relatedProducts"
       :products="relatedProducts"
@@ -245,14 +239,6 @@
       title="Match it with"
     />
     <div id="bot-div"></div>
-    <!-- </Intersect> -->
-    <!-- </LazyHydrate> -->
-    <!-- <LazyHydrate when-visible>
-      <InstagramFeed />
-    </LazyHydrate>
-    <LazyHydrate when-visible>
-      <MobileStoreBanner />
-    </LazyHydrate> -->
   </div>
 </template>
 <script>
@@ -260,29 +246,21 @@ import {
   SfProperty,
   SfHeading,
   SfPrice,
-  // SfRating,
   SfSelect,
   SfAddToCart,
   SfTabs,
   SfGallery,
   SfIcon,
-  // SfImage,
   SfBadge,
-  // SfBanner,
-  // SfAlert,
-  // SfSticky,
-  // SfReview,
   SfBreadcrumbs,
   SfLoader,
   SfButton,
   SfColor,
+  SfCarousel,
 } from '@storefront-ui/vue';
-// import Intersect from 'vue-intersect';
-// import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts1.vue';
 import { ref, computed, watch, onMounted } from '@nuxtjs/composition-api';
 import { useProduct, useCart, productGetters } from '@vue-storefront/shopify';
-// import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
 import LazyHydrate from 'vue-lazy-hydration';
 import { onSSR } from '@vue-storefront/core';
 import useUiNotification from '~/composables/useUiNotification';
@@ -298,22 +276,13 @@ export default {
     SfSelect,
     SfAddToCart,
     SfTabs,
-    SfGallery,
+
     SfIcon,
     SfBadge,
     SfBreadcrumbs,
     RelatedProducts,
     SfButton,
     LazyHydrate,
-    // Intersect,
-    // SfAlert,
-    // SfRating,
-    // SfImage,
-    // SfBanner,
-    // SfSticky,
-    // SfReview,
-    // InstagramFeed,
-    // MobileStoreBanner,
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -323,8 +292,6 @@ export default {
   transition: 'fade',
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   setup(props, context) {
-    // const pinned = ref(false);
-    // const cssVars = computed(() => pinned.value);
     const breadcrumbs = ref([]);
     const atttLbl = '';
     const qty = ref(1);
@@ -433,6 +400,7 @@ export default {
     });
     onMounted(() => {
       const intersection = ref(0);
+
       const watcher = watch(
         productloading,
         (newVal, preVal) => {
@@ -446,9 +414,14 @@ export default {
               breadCrumbsIntersectionRation.value =
                 breadCrumbs.intersectionRatio;
               const productInfo = document.getElementById('product-info');
-              if (breadCrumbs.intersectionRatio > 0) {
+              if (window.innerWidth < 1030) {
+                productInfo.classList.remove('is-pinned-bot', 'is-fixed');
+              } else if (breadCrumbs.intersectionRatio > 0) {
                 productInfo.classList.remove('is-fixed', 'is-pinned-bot');
-              } else {
+              } else if (
+                breadCrumbs.intersectionRatio === 0 &&
+                window.innerWidth > 1030
+              ) {
                 productInfo.classList.remove('is-pinned-bot');
                 productInfo.classList.add('is-fixed');
               }
@@ -460,12 +433,18 @@ export default {
                 const productInfo = document.getElementById('product-info');
                 relatedProductsIntersectionRation.value =
                   relatedProducts.intersectionRatio;
-                if (relatedProducts.intersectionRatio > 0) {
+                if (window.innerWidth < 1030) {
+                  productInfo.classList.remove('is-pinned-bot', 'is-fixed');
+                } else if (
+                  relatedProducts.intersectionRatio > 0 &&
+                  window.innerWidth > 1030
+                ) {
                   productInfo.classList.add('is-pinned-bot');
                   productInfo.classList.remove('is-fixed');
                 } else if (
                   intersection.value === 0 &&
-                  breadCrumbsIntersectionRation.value === 0
+                  breadCrumbsIntersectionRation.value === 0 &&
+                  window.innerWidth > 1030
                 ) {
                   productInfo.classList.add('is-fixed');
                   productInfo.scrollTop = 135;
@@ -479,7 +458,12 @@ export default {
               const botDiv = entry[0];
               intersection.value = botDiv.intersectionRatio;
               const productInfo = document.getElementById('product-info');
-              if (botDiv.intersectionRatio > 0) {
+              if (window.innerWidth < 1030) {
+                productInfo.classList.remove('is-pinned-bot', 'is-fixed');
+              } else if (
+                botDiv.intersectionRatio > 0 &&
+                window.innerWidth > 1030
+              ) {
                 productInfo.classList.remove('is-fixed');
                 productInfo.classList.add('is-pinned-bot');
               }
@@ -627,6 +611,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  @media (min-width: 1024px) {
+    flex-direction: column;
+    width: 50%;
+  }
+}
+
+.img-container {
+  @media (max-width: 1023px) {
+    width: 40%;
+    margin: var(--spacer-base) var(--spacer-xs);
+  }
+}
+.gallery-img {
+  @media (max-width: 1023px) {
+    // width: 100vw
+    width: 100%;
+    max-width: 500px;
+    max-height: 100vh;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+}
+
 ::v-deep .sf-gallery__stage {
   flex: 1;
   max-width: 27.375rem;
@@ -644,27 +655,27 @@ export default {
   padding: 100px 0;
 }
 .is-fixed {
-  @media (min-width: 1024px) {
-    position: fixed;
-    right: 2%;
-    top: 0;
+  width: 53vw;
+  position: fixed;
+  right: 2%;
+  top: 3%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 0;
+  height: 100%;
+  @media (min-width: 1170px) {
     width: 52.5%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-top: 0;
-    // overf  low: auto;
-    // max-height: 100vh;
-    height: 100%;
   }
 }
 ::-webkit-scrollbar {
   width: 5px !important;
 }
 .is-pinned-bot {
-  @media (min-width: 1024px) {
-    position: absolute;
-    bottom: -140px;
-    right: 2%;
+  position: absolute;
+  bottom: -140px;
+  right: 2%;
+  width: 50vw;
+  @media (min-width: 1170px) {
     width: 52.5%;
   }
 }
@@ -702,13 +713,6 @@ export default {
   &__info {
     margin: var(--spacer-sm) auto;
     @include for-desktop {
-      // max-width: 32.625rem;
-      // width: 50%;
-
-      margin: 0 0 0 4rem;
-      // position: var(--info-position);
-      // right: 3%;
-      // top: 10%;
     }
   }
   &__header {
@@ -887,6 +891,8 @@ export default {
   }
 }
 .sf-gallery {
+  --gallery-flex-direction: row;
+
   @media (min-width: 1024px) {
     --gallery-flex-direction: column;
   }
@@ -894,6 +900,25 @@ export default {
 ::v-deep .sf-gallery__thumbs {
   @media (min-width: 1024px) {
     overflow: unset;
+  }
+}
+::v-deep .sf-gallery__thumbs {
+  display: none;
+  @media (min-width: 1024px) {
+    overflow: unset;
+    display: inline;
+  }
+}
+@media (max-width: 1024px) {
+  ::v-deep .sf-gallery .sf-gallery__stage {
+    width: 100%;
+    max-width: 100%;
+  }
+  .image-wrapper {
+    --image-width: 100%;
+  }
+  .sf-image--wrapper {
+    display: unset;
   }
 }
 </style>
